@@ -12,18 +12,17 @@ const { Options } = require('selenium-webdriver/chrome');
         throw new Error("Please set the INSTAHYRE_EMAIL and INSTAHYRE_PASSWORD environment variables");
     }
 
-    // Set up Chrome options for incognito mode
+
     let options = new Options();
-    // options.addArguments('--headless'); // Remove this line if you want to run in non-headless mode
     options.addArguments('--disable-gpu');
     options.addArguments('--no-sandbox');
-    options.addArguments('--incognito'); // Add this line for incognito mode
+    options.addArguments('--incognito'); // Adding this line for incognito mode
 
-    // Create a new browser instance
+    // Creating a new browser instance
     let driver = await new Builder().forBrowser('chrome').setChromeOptions(options).build();
     console.log(driver)
     try {
-        // Navigate to the website
+
         await driver.get('https://www.instahyre.com/candidates/register/');
 
 
@@ -45,13 +44,12 @@ const { Options } = require('selenium-webdriver/chrome');
         // Wait for login to complete
         await driver.sleep(10000);
 
-        // Locate the first view button and click on it
         let viewButtons = await driver.wait(until.elementsLocated(By.xpath("//button[contains(text(), 'View')]")), 15000);
         if (viewButtons.length > 0) {
             await viewButtons[0].click();
-            await driver.sleep(3000);
+            await driver.sleep(15000);
 
-            // Number of applications to be sent
+            // Number of applications to be sent.
             let applicationsToSend = 1000;
             while (applicationsToSend > 0) {
                 try {
@@ -59,7 +57,7 @@ const { Options } = require('selenium-webdriver/chrome');
                     let applyButton = await driver.wait(until.elementLocated(By.xpath("//button[contains(text(), 'Apply')]")), 15000);
                     await applyButton.click();
                     applicationsToSend -= 1;
-                    await driver.sleep(1000);
+                    await driver.sleep(15000);
                 } catch (e) {
                     console.log(`Error while applying: ${e}`);
                     break;
